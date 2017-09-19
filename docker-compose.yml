@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  netgifx:
+    build: ./Wildfly
+    environment:
+      - MYSQL_URI=db:3306
+    ports:
+      - "8080:8080"
+      - "9990:9990"
+    networks:
+      - front-tier
+      - back-tier
+
+  mysqldb:
+    container_name: "db"
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mysqldb
+    networks:
+      - back-tier
+
+volumes:
+  db-data:
+
+networks:
+  front-tier:
+  back-tier:
